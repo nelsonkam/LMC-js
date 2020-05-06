@@ -1,0 +1,83 @@
+// Variables
+const TranslateInstructions = {
+    ADD: 1,
+    SUB: 2,
+    STO: 3,
+    STA: 3,
+    LDA: 5,
+    BR: 6,
+    BRA: 6,
+    BRZ: 7,
+    BRP: 8,
+    IN: 901,
+    OUT: 902,
+    HLT: 0,
+    COB: 0,
+    DAT: 0
+};
+
+// Translates instructions in letters to numeric source code
+function Translate(instructions) {
+    let Memory = [];
+    instructions = instructions.map((val) => val.split(" "));
+
+    for (i in instructions) {
+        let c_instruction = instructions[i];
+        let opcode = c_instruction[0].toUpperCase();
+        let data = c_instruction[1];
+        data = data.length == 1 ? "0" + data : data;
+        let t_instruction = TranslateInstructions[opcode];
+
+        if (typeof opcode != "string") throw ("Only translate from string values");
+        if (!t_instruction) throw ("Instruction not known");
+
+        c_instruction = data == undefined ? t_instruction : t_instruction + data;
+
+        Memory.push(Number(c_instruction));
+    }
+
+    return Memory;
+}
+
+// Translates Aliased instructions to source code
+function TranslateAlias(instructions) {
+    let preMemory = [];
+    let Memory = [];
+    let alias = {};
+
+    for (i in instructions) {
+        let c_instruction = instructions[i];
+
+        // Alias
+        if (c_instruction[0]) alias[c_instruction[0].toUpperCase()] = i;
+
+        // opcode
+        let opcode = c_instruction[1].toUpperCase();
+        if (typeof opcode != "string") throw ("Only translate from string values");
+        let t_instruction = TranslateInstructions[opcode];
+        if (t_instruction === undefined) throw ("Unknown instruction");
+
+        // Data
+        let data = c_instruction[2];
+        data = typeof data == "number" && data.toString().length == 1 ? "0" + data : data;
+
+        // Assign
+        if (isNaN(Number(data))) c_instruction = [t_instruction, data.toUpperCase()];
+        else c_instruction = t_instruction.toString() + data.toString();
+        preMemory.push(c_instruction);
+    }
+
+    for (a in alias)
+        alias[a] = alias[a].length == 1 ? "0" + alias[a] : alias[a];
+
+    for (p in preMemory) {
+        let instruction = preMemory[p];
+        if (typeof instruction == "string")
+            instruction = Number(instruction);
+        else if (typeof instruction == "object")
+            instruction = Number(instruction[0] + alias[instruction[1]]);
+        Memory.push(instruction);
+    }
+
+    return Memory;
+}
