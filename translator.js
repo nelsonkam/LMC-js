@@ -16,23 +16,36 @@ const TranslateInstructions = {
     DAT: 0
 };
 
+// Checks what translation is needed
+function Translate(Memory) {
+    if (Number(Memory[0]) == Memory[0])
+        return Memory;
+    if (typeof Memory[0] == "string")
+        return _translateIndex(Memory);
+    if (typeof Memory[0] == "object")
+        return _translateAlias(Memory);
+}
+
 // Translates instructions in letters to numeric source code
-function Translate(instructions) {
+function _translateIndex(instructions) {
     let Memory = [];
     instructions = instructions.map((val) => val.split(" "));
 
     for (i in instructions) {
+        // Current Instruction
         let c_instruction = instructions[i];
         let opcode = c_instruction[0].toUpperCase();
         let data = c_instruction[1];
+        // Corrects data length
         data = data.length == 1 ? "0" + data : data;
         let t_instruction = TranslateInstructions[opcode];
 
+        // Validations
         if (typeof opcode != "string") throw ("Only translate from string values");
         if (!t_instruction) throw ("Instruction not known");
 
+        // Assign and push into Memory
         c_instruction = data == undefined ? t_instruction : t_instruction + data;
-
         Memory.push(Number(c_instruction));
     }
 
@@ -40,16 +53,20 @@ function Translate(instructions) {
 }
 
 // Translates Aliased instructions to source code
-function TranslateAlias(instructions) {
+function _translateAlias(instructions) {
     let preMemory = [];
     let Memory = [];
     let alias = {};
 
+    // Generates prememory and alias array
     for (i in instructions) {
         let c_instruction = instructions[i];
 
-        // Alias
-        if (c_instruction[0]) alias[c_instruction[0].toUpperCase()] = i;
+        // Alias array
+        let a = c_instruction[0].toUpperCase();
+        if (c_instruction[0]) alias[a] = i;
+        // Corrects alias length
+        alias[a] = alias[a].length == 1 ? "0" + alias[a] : alias[a];
 
         // opcode
         let opcode = c_instruction[1].toUpperCase();
@@ -59,17 +76,16 @@ function TranslateAlias(instructions) {
 
         // Data
         let data = c_instruction[2];
+        // Correct data length
         data = typeof data == "number" && data.toString().length == 1 ? "0" + data : data;
 
-        // Assign
+        // Assign and push into prememory
         if (isNaN(Number(data))) c_instruction = [t_instruction, data.toUpperCase()];
         else c_instruction = t_instruction.toString() + data.toString();
         preMemory.push(c_instruction);
     }
 
-    for (a in alias)
-        alias[a] = alias[a].length == 1 ? "0" + alias[a] : alias[a];
-
+    // Populates Memory with prememory and alias
     for (p in preMemory) {
         let instruction = preMemory[p];
         if (typeof instruction == "string")

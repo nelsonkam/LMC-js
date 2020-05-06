@@ -6,14 +6,18 @@
 Load the `index.html` into any web browser. For now, the only way to interact with it is through the console. Open the devtools and do the following
 1. Load the `Memory` array with the appropriate code.
    `Memory = [901, ...]`
-2. (if necessary) Translate the human-readable code to machine code.
-3. Load the `Inputs` array with your inputs - will read from left to right.
+   The program will attempt to translate the human-readable code to machine code.
+2. Load the `Inputs` array with your inputs - will read from left to right.
    `Inputs = [1, 2, 3]`
    Memory has a limit of 99 places.
    Don't worry about filling the unused addresses - they will be filled for you.
    You can check out a couple of examples in the `examples.js`
-4. Execute `Startup()`
+3. Execute `Startup()`
 
 ### Other features
 * Translate from aliased and indexed human redable to source code.
    Check the `examples.js` to understand the different indexing types.
+
+### *Upcoming
+* UI interface
+* Save and export scripts
