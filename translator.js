@@ -66,7 +66,7 @@ function _translateAlias(instructions) {
         let a = c_instruction[0].toUpperCase();
         if (c_instruction[0]) alias[a] = i;
         // Corrects alias length
-        alias[a] = alias[a].length == 1 ? "0" + alias[a] : alias[a];
+        alias[a] = alias[a] && alias[a].length == 1 ? "0" + alias[a] : alias[a];
 
         // opcode
         let opcode = c_instruction[1].toUpperCase();

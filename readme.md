@@ -26,7 +26,7 @@ Startup()
 ### Other features
 * Translate from aliased and indexed human redable to source code.
    Check the `examples.js` to understand the different indexing types.
-* Settings for non-standard implementations. This includes, bigger Memory size and length, BRZ behaivour, negative flag, overflow behaviour. 
+* Settings for non-standard implementations. This includes, bigger Memory size and length, BRZ behaivour, negative flag, overflow behaviour. Note that these are experimental settings, and are set to their respective defaults.
 
 ### Upcoming
 * UI interface

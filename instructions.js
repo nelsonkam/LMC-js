@@ -1,3 +1,17 @@
+// Variables
+const Instructions = {
+    1: ADD,
+    2: SUB,
+    3: STO,
+    5: LDA,
+    6: BRA,
+    7: BRZ,
+    8: BRP,
+    901: IN,
+    902: OUT,
+    0: HLT
+};
+
 // Add the value in mailbox
 // to value in the accumulator
 function ADD(mailbox) {
@@ -21,7 +35,7 @@ function SUB(mailbox) {
 
     if (Accumulator < 0) {
         if (!Settings.AllowNegative)
-            throw ("Negative numbers not allowed");
+            _err("Negative numbers not allowed");
         else
             _switchAccumulatorSign();
     }
@@ -32,16 +46,22 @@ function SUB(mailbox) {
 function _manageOverflow() {
     if (Accumulator > 10 ** Settings.MemorySize)
         if (Settings.ErrOverflow)
-            err("SUB overflow", Accumulator, mailbox);
+            _err("SUB overflow", Accumulator, mailbox);
         else
             // Loops back to 0 after the max memory size, using mod
             Accumulator = Accumulator % (10 ** Settings.MemorySize);
 }
 
 // Switches accumulator sign and negative flag
-function _switchAccumulatorSign() {
-    Accumulator = -Accumulator;
-    NegativeFlags.Accumulator = !NegativeFlags.Accumulator;
+// @param optional 1 || -1
+function _switchAccumulatorSign(sign) {
+    if (sign) {
+        Accumulator = Accumulator * sign;
+        NegativeFlags.Accumulator = !(sign + 1);
+    } else {
+        Accumulator = -Accumulator;
+        NegativeFlags.Accumulator = !NegativeFlags.Accumulator;
+    }
 }
 
 // Store the value in the accumulator
@@ -73,7 +93,7 @@ function BRZ(mailbox) {
 // If accumulator is > 0
 // Branch for next instruction
 function BRP(mailbox) {
-    if (Accumulator > 0)
+    if (Accumulator != 0 && !NegativeFlags.Accumulator)
         Counter = mailbox;
 }
 
@@ -82,7 +102,9 @@ function BRP(mailbox) {
 function IN() {
     Accumulator = Inputs.shift();
     if (Accumulator < 0)
-        _switchAccumulatorSign();
+        _switchAccumulatorSign(-1);
+    else
+        _switchAccumulatorSign(1);
 }
 
 // Concat value in accumulator

@@ -1,19 +1,49 @@
 <html>
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="./main.js"></script>
+    <script src="./instructions.js"></script>
     <script src="./translator.js"></script>
     <script src="./examples.js"></script>
-    <script src="./instructions.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./ui.js"></script>
+    <style>
+        input {
+            width: 15%;
+        }
+
+        .wrapper {
+            display: flex;
+        }
+
+        #instructionset {
+            width: 50%;
+        }
+
+        #button-interface {
+            height: inherit;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="wrapper">
+        <form id="instructionset"></form>
 
+        <div id="inputs-wrapper">
+            <label for="inputs-name">Inputs</label> <br>
+            <textarea id="inputs" name="inputs-name"></textarea>
+        </div>
+        <div id="outputs-wrapper">
+            <label for="outputs-name">Outputs</label> <br>
+            <textarea id="outputs" name="outputs-name"></textarea>
+        </div>
+        <div id="button-interface">
+            <button onclick="OnStartup()">Run Program</button>
+            <button onclick="CleanMemory()">Clear Program</button>
+            <button onclick="FillupMemory()">Fillup Memory</button>
+        </div>
+    </div>
 </body>
 
 </html>

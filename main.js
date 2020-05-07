@@ -1,17 +1,3 @@
-// Variables
-const Instructions = {
-    1: ADD,
-    2: SUB,
-    3: STO,
-    5: LDA,
-    6: BRA,
-    7: BRZ,
-    8: BRP,
-    901: IN,
-    902: OUT,
-    0: HLT
-};
-
 // Settings
 const Settings = {
     // Allows negative numbers
@@ -38,7 +24,7 @@ const Settings = {
     // BRZ: Breake if Zero
     // BRN: Break if Zero or Negative (standard)
     // Manages BRZ behaviour
-    BRN: true
+    BRN: false
 };
 
 // Instructions and data are saved in Memory
@@ -59,7 +45,8 @@ let Halt = true;
 
 
 // Starting point
-function Startup() {
+// @param optional Memory
+function Startup(_memory) {
     // Cleanup and variable prepare
     FillupMemory();
     Accumulator = 0;
@@ -67,9 +54,13 @@ function Startup() {
     Outputs = [];
     Halt = false;
     _emptyNegatives();
-    _checkSettings();
-    // Translates Memory
-    Translate(Memory);
+    Settings.MemoryValidate();
+    // Checks for memory param
+    Memory = _memory ?
+        // Translates Memory
+        Translate(_memory) :
+        Translate(Memory);
+
     // Start Main Loop
     _loop();
 }
@@ -92,13 +83,13 @@ function _loop() {
     // If program hasn't stopped, performs next loop
     if (!Halt) _loop();
     // On halt, logs output
-    else _log(Outputs, Inputs);
+    else DisplayOutput();
 }
 
 
 // Utility functions
 function _log(...a) {
-    console._log(arguments);
+    console.log(arguments);
 }
 
 // Empry Memory
