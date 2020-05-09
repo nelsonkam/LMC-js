@@ -5,6 +5,8 @@
 ### Execution
 Load the `index.html` into any web browser. For now, the only way to interact with it is through the console. Open the devtools and do the following
 
+Note that the UI is under development. Use the console to make sure you get accurate results.
+
 Load the `Memory` array with the appropriate code.
 The program will attempt to translate the human-readable code to machine code.
 ```

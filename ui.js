@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    populateForm();
+    // populateForm();
 
     function populateForm() {
         for (let i = 0; i < Settings.MemoryLength; i++) {
