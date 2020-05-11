@@ -1,37 +1,26 @@
 // Settings
 const Settings = {
-    // Allows negative numbers
-    AllowNegative: false,
-
     // ture => Throws error if ADD or SUB overflows
-    // false => Loops back to 000 (non-standard)
+    // false => Loops back to 0 with % (non-standard)
     ErrOverflow: true,
 
     // Size limit of each Memory unit (in digits)
     // @warning: changing this might cause Memory loss, if data gets used as instruction
     // Standard: 3
     MemorySize: 3,
-    // Memory limit Length
-    // Standard: 100 (0 index)
+    // Memory Length limit
+    // Standard: 100 (00-99)
     MemoryLength: 100,
     // @dev Validates Memory relationship.
     // Tail of mailboxes refer to memory addresses, therefore this relationship must hold
     MemoryValidate: () => {
         if (10 ** Settings.MemorySize != 10 * Settings.MemoryLength)
             throw ("Settings error. Please check MemorySize and MemoryLength");
-    },
-
-    // BRZ: Breake if Zero
-    // BRN: Break if Zero or Negative (standard)
-    // Manages BRZ behaviour
-    BRN: false
+    }
 };
 
 // Instructions and data are saved in Memory
 let Memory = [];
-// Negative Flag boolean map witht the form
-// address (int): isNegative (ture)
-let NegativeFlags = {};
 // Working bench
 let Accumulator = 0;
 // Next instruction address
@@ -53,7 +42,6 @@ function Startup(_memory) {
     Counter = 0;
     Outputs = [];
     Halt = false;
-    _emptyNegatives();
     Settings.MemoryValidate();
     // Checks for memory param
     Memory = _memory ?
@@ -105,13 +93,6 @@ function FillupMemory() {
     for (let i = 0; i < Settings.MemoryLength; i++)
         if (!Memory[i])
             Memory[i] = 0;
-}
-
-// Empties Negative Flag map
-function _emptyNegatives() {
-    NegativeFlags = {
-        Accumulator: false
-    };
 }
 
 function _count() {

@@ -16,14 +16,20 @@ const TranslateInstructions = {
     DAT: 0
 };
 
-// Checks what translation is needed
+// Checks what translation is needed by using first item in the object
 function Translate(Memory) {
+    // Don't translate
     if (Number(Memory[0]) == Memory[0])
         return Memory;
-    if (typeof Memory[0] == "string")
+    // Index based translation
+    else if (typeof Memory[0] == "string")
         return _translateIndex(Memory);
-    if (typeof Memory[0] == "object")
+    // Alias based translation
+    else if (typeof Memory[0] == "object")
         return _translateAlias(Memory);
+    // Default
+    else
+        throw ("Wrong Memory type");
 }
 
 // Translates instructions in letters to numeric source code
