@@ -43,7 +43,7 @@ function _translateIndex(instructions) {
         let opcode = c_instruction[0].toUpperCase();
         let data = c_instruction[1];
         // Corrects data length
-        data = data.length == 1 ? "0" + data : data;
+        data = data && data.length == 1 ? "0" + data : data;
         let t_instruction = TranslateInstructions[opcode];
 
         // Validations

@@ -35,7 +35,7 @@ let Halt = true;
 
 // Starting point
 // @param optional Memory
-function Startup(_memory) {
+function Startup() {
     // Cleanup and variable prepare
     FillupMemory();
     Accumulator = 0;
@@ -43,12 +43,6 @@ function Startup(_memory) {
     Outputs = [];
     Halt = false;
     Settings.MemoryValidate();
-    // Checks for memory param
-    Memory = _memory ?
-        // Translates Memory
-        Translate(_memory) :
-        Translate(Memory);
-
     // Start Main Loop
     _loop();
 }
@@ -82,14 +76,14 @@ function _log(...a) {
 
 // Empry Memory
 function CleanMemory() {
-    for (let i = 0; i < Settings.MemorySize; i++)
-        Memory[i] = 0;
+    Memory = new Array(100).fill(0);
 }
 
 // Fills unused Memory with 0
 function FillupMemory() {
     if (Memory.length > Settings.MemoryLength)
         Settings.MemoryLength = Memory.length;
+
     for (let i = 0; i < Settings.MemoryLength; i++)
         if (!Memory[i])
             Memory[i] = 0;
@@ -98,11 +92,19 @@ function FillupMemory() {
 function _count() {
     Counter++;
     if (Counter > Memory.length)
+        // Will not find memory in next loop
         _err("Counter overflow");
 }
 
 function _err(...a) {
-    _log(arguments);
+    // Halts core loop
     HLT();
+    // Outputs the result to ui
+    _setResult(arguments[0]);
+    // Shows the current Memory to ui
+    _setProgram(Memory);
+    // console.log
+    _log(arguments);
+    // Throws to console
     throw (arguments[0]);
 }
