@@ -10,6 +10,11 @@ $(document).ready(function () {
     _populateIndex();
 });
 
+// Show instruction table
+let OnShowInstructions = function () {
+    document.getElementById("instructions").classList.toggle("hidden");
+};
+
 // Fills up Machine-based program with 0's
 let OnFillupMemory = function () {
     Memory = _getProgram();

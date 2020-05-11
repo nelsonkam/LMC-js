@@ -48,7 +48,7 @@ function _translateIndex(instructions) {
 
         // Validations
         if (typeof opcode != "string") throw ("Only translate from string values");
-        if (!t_instruction) throw ("Instruction not known");
+        if (t_instruction === undefined) throw ("Instruction not known");
 
         // Assign and push into Memory
         c_instruction = data == undefined ? t_instruction : t_instruction + data;

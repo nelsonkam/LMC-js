@@ -13,6 +13,17 @@
     <script src="./examples.js"></script>
     <script src="./ui.js"></script>
     <style>
+        tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+
+        td,
+        th {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
         .wrapper {
             display: flex;
             columns: 3;
@@ -24,6 +35,10 @@
             margin: 1rem 0;
             display: inline-block;
             width: 100%;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -70,6 +85,73 @@
             <button class="clickable" onclick="OnClearMemory()">
                 Clear Memory
             </button>
+            <br>
+            <br>
+            <button class="clickable" onclick="OnShowInstructions()">
+                Instructions
+            </button>
+            <table class="hidden" id="instructions">
+                <tr>
+                    <th>Machine Code</th>
+                    <th>Index Code</th>
+                    <!-- <th>Description</th> -->
+                </tr>
+                <tr>
+                    <td>1xx</td>
+                    <td>ADD</td>
+                    <!-- <td>Adds to Accumulator</td> -->
+                </tr>
+                <tr>
+                    <td>2xx</td>
+                    <td>SUB</td>
+                    <!-- <td>Subtracts to Accumulator</td> -->
+                </tr>
+                <tr>
+                    <td>3xx</td>
+                    <td>STO</td>
+                    <!-- <td>Stores Accumulator value to xx Memory</td> -->
+                </tr>
+                <tr>
+                    <td>5xx</td>
+                    <td>LDA</td>
+                    <!-- <td>Loads value in xx Memory to Accumulator</td> -->
+                </tr>
+                <tr>
+                    <td>6xx</td>
+                    <td>BR</td>
+                    <!-- <td>Unconditional break</td> -->
+                </tr>
+                <tr>
+                    <td>7xx</td>
+                    <td>BRZ</td>
+                    <!-- <td>Breaks if Accumulator is = 0</td> -->
+                </tr>
+                <tr>
+                    <td>8xx</td>
+                    <td>BRP</td>
+                    <!-- <td>Breaks if Accumulator is > 0</td> -->
+                </tr>
+                <tr>
+                    <td>901</td>
+                    <td>IN</td>
+                    <!-- <td>Gets next Input to Accumulator</td> -->
+                </tr>
+                <tr>
+                    <td>902</td>
+                    <td>OUT</td>
+                    <!-- <td>Pushes Accumulator to Outputs</td> -->
+                </tr>
+                <tr>
+                    <td>000</td>
+                    <td>HLT</td>
+                    <!-- <td>Halts program</td> -->
+                </tr>
+                <tr>
+                    <td>(only index)</td>
+                    <td>DAT</td>
+                    <!-- <td>Data variable (only for Index-based code)</td> -->
+                </tr>
+            </table>
         </div>
     </div>
 </body>
