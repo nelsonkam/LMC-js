@@ -2,7 +2,7 @@ $(document).ready(function () {
     // Populates index field with line numbers
     let _populateIndex = function () {
         let index = [];
-        for (var i = 0; i < 100; i++)
+        for (let i = 0; i < 100; i++)
             index.push(i);
         document.getElementById("index").value = index.join("\n");
     };
