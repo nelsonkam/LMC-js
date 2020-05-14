@@ -67,3 +67,17 @@ let quine = [
     ["", "BRA", "LOAD"],
     ["ONE", "DAT", 1],
 ];
+
+/// @notice should pass thru the ui cleaner
+/// @params p
+/// @return [p .. 0]
+let raw_countdown = `
+ in
+ out
+lp brz end
+ sub one
+ out
+ br lp
+end hlt
+one dat 1
+`;

@@ -81,12 +81,12 @@ function _translateAlias(instructions) {
         if (t_instruction === undefined) throw ("Unknown instruction");
 
         // Data
-        let data = c_instruction[2];
+        let data = c_instruction[2] ? c_instruction[2] : "";
         // Correct data length
         data = typeof data == "number" && data.toString().length == 1 ? "0" + data : data;
 
         // Assign and push into prememory
-        if (isNaN(Number(data))) c_instruction = [t_instruction, data.toUpperCase()];
+        if (data && isNaN(Number(data))) c_instruction = [t_instruction, data.toUpperCase()];
         else c_instruction = t_instruction.toString() + data.toString();
         preMemory.push(c_instruction);
     }

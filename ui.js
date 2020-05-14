@@ -10,9 +10,20 @@ $(document).ready(function () {
     _populateIndex();
 });
 
-// Show instruction table
-let OnShowInstructions = function () {
-    document.getElementById("instructions").classList.toggle("hidden");
+// Show More options
+let OnShowMore = function () {
+    document.getElementById("more").classList.toggle("hidden");
+};
+
+// Loads examples
+let OnLoadExample = function (name) {
+    _memory = eval(name);
+    _setProgram(_memory);
+};
+
+let OnLoadExampleIndex = function (name, isAlias) {
+    let _memory = eval(name);
+    _setIndexCode(_memory, isAlias);
 };
 
 // Fills up Machine-based program with 0's
@@ -24,23 +35,37 @@ let OnFillupMemory = function () {
 
 // Translates Index-based to Machine-based
 let OnTranslateMemory = function () {
-    let program = _translateIndex(_getIndexCode());
+    let program;
+    try {
+        if (_isIndexMode())
+            program = _translateIndex(_getIndexCode());
+        else
+            program = _translateAlias(_getAliasCode());
+    } catch (e) {
+        console.log(e);
+        _setResult("Error in translation. Check assembly version.");
+        return;
+    }
+
     _setProgram(program);
 };
 
 // Startup program
 let OnStartup = function () {
     _resetResult();
-    _setOutputs([]);
-    Inputs = _getInputs();
 
     if (_getProgram().length > 1) {
         Memory = _getProgram();
         _setResult("Using Machine-based code");
     } else if (_getIndexCode().length > 1) {
-        Memory = _translateIndex(_getIndexCode());
-        _setResult("Using Index-based code");
+        // Memory = _translateIndex(_getIndexCode());
+        return _setResult("Translate your program before executing.");
+    } else {
+        return _setResult("No program set.");
     }
+
+    _setOutputs([]);
+    Inputs = _getInputs();
 
     Startup();
 };
@@ -74,8 +99,17 @@ let _getIndexCode = function () {
     return document.getElementById("index_code").value.split("\n");
 };
 
-let _setIndexCode = function (value) {
-    document.getElementById("machine_code").value = value.join("\n");
+let _getAliasCode = function () {
+    return max = document.getElementById("index_code").value.split("\n").map(x => x.split(" "));
+};
+
+let _isIndexMode = function () {
+    return document.getElementById("index_code_radio").checked;
+};
+
+let _setIndexCode = function (value, isAlias) {
+    value = isAlias ? value.join("\n").split(",").join(" ") : value.join("\n");
+    document.getElementById("index_code").value = value;
 };
 
 // Inputs

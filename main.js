@@ -49,7 +49,7 @@ function Startup() {
 
 // Core loop
 function _loop() {
-    // Accumulator is next mailbox address
+    // Counter is next mailbox address
     // Mailbox address contains next instruction
     let instruction = Memory[Counter].toString();
     // Opcode: operation to perform
@@ -98,7 +98,7 @@ function _count() {
 
 function _err(...a) {
     // Halts core loop
-    HLT();
+    Halt = true;
     // Outputs the result to ui
     _setResult(arguments[0]);
     // Shows the current Memory to ui

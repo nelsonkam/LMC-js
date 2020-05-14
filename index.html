@@ -46,15 +46,15 @@
 <body>
     <div class="wrapper">
         <div class="col">
-            <label for="machine_code">Machine-based</label>
+            <label for="machine_code">Machine code</label>
             <br>
             <textarea id="machine_code" rows="100" cols="5" maxlength="400"></textarea>
             <textarea id="index" rows="100" cols="2" disabled></textarea>
         </div>
         <div class="col">
-            <label for="index_code">Index-based</label>
+            <label for="index_code">Assembly code</label>
             <br>
-            <textarea id="index_code" rows="100" cols="8" maxlength="900"></textarea>
+            <textarea id="index_code" rows="100" cols="12" maxlength="1200"></textarea>
         </div>
         <div class="col">
             <button class="clickable" onclick="OnFillupMemory()">
@@ -85,75 +85,85 @@
             <button class="clickable" onclick="OnClearMemory()">
                 Clear Memory
             </button>
-            <br>
+            <!-- <br>
             <br>
             <button class="clickable" onclick="OnShowInstructions()">
                 Instructions
-            </button>
+            </button> -->
             <table class="hidden" id="instructions">
                 <tr>
                     <th>Machine Code</th>
-                    <th>Index Code</th>
-                    <!-- <th>Description</th> -->
+                    <th>Assembly Code</th>
                 </tr>
                 <tr>
                     <td>1xx</td>
                     <td>ADD</td>
-                    <!-- <td>Adds to Accumulator</td> -->
                 </tr>
                 <tr>
                     <td>2xx</td>
                     <td>SUB</td>
-                    <!-- <td>Subtracts to Accumulator</td> -->
                 </tr>
                 <tr>
                     <td>3xx</td>
                     <td>STO</td>
-                    <!-- <td>Stores Accumulator value to xx Memory</td> -->
                 </tr>
                 <tr>
                     <td>5xx</td>
                     <td>LDA</td>
-                    <!-- <td>Loads value in xx Memory to Accumulator</td> -->
                 </tr>
                 <tr>
                     <td>6xx</td>
                     <td>BR</td>
-                    <!-- <td>Unconditional break</td> -->
                 </tr>
                 <tr>
                     <td>7xx</td>
                     <td>BRZ</td>
-                    <!-- <td>Breaks if Accumulator is = 0</td> -->
                 </tr>
                 <tr>
                     <td>8xx</td>
                     <td>BRP</td>
-                    <!-- <td>Breaks if Accumulator is > 0</td> -->
                 </tr>
                 <tr>
                     <td>901</td>
                     <td>IN</td>
-                    <!-- <td>Gets next Input to Accumulator</td> -->
                 </tr>
                 <tr>
                     <td>902</td>
                     <td>OUT</td>
-                    <!-- <td>Pushes Accumulator to Outputs</td> -->
                 </tr>
                 <tr>
                     <td>000</td>
                     <td>HLT</td>
-                    <!-- <td>Halts program</td> -->
                 </tr>
                 <tr>
-                    <td>(only index)</td>
+                    <td>(only assembly)</td>
                     <td>DAT</td>
-                    <!-- <td>Data variable (only for Index-based code)</td> -->
                 </tr>
             </table>
-
-            <!-- TODO: make a "about" button :: another page that describes the process better -->
+            <br>
+            <br>
+            <button class="clickable" onclick="OnShowMore()">
+                More...
+            </button>
+            <div id="more" class="hidden">
+                <p>Load Examples</p>
+                <button class="clickable" onclick="OnLoadExample('multiplication')">
+                    Load Multiplication
+                </button><br><br>
+                <button class="clickable" onclick="OnLoadExampleIndex('r_division')">
+                    Load Division (with remainder)
+                </button><br><br>
+                <button class="clickable" onclick="OnLoadExampleIndex('quine', true)">
+                    Load Quine
+                </button><br><br>
+                <p>Type of Assembly code</p>
+                <form>
+                    <input type="radio" id="index_code_radio" name="assembly" value="index" checked>
+                    <label for="index_code_radio">Index Code</label><br>
+                    <input type="radio" id="alias_code_radio" name="assembly" value="alias">
+                    <label for="alias_code_radio">Alias code</label>
+                </form>
+            </div>
         </div>
     </div>
 </body>
