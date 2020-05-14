@@ -67,7 +67,11 @@ let OnStartup = function () {
     _setOutputs([]);
     Inputs = _getInputs();
 
-    Startup();
+    try {
+        Startup();
+    } catch (e) {
+        _setResult(e);
+    }
 };
 
 // Clears memory
@@ -87,7 +91,7 @@ let DisplayOutput = function () {
 // Machine Code
 let _getProgram = function () {
     return document.getElementById("machine_code").value.split("\n")
-        .map(x => Number(x));
+        .map(x => isNaN(Number(x)) ? 0 : Number(x));
 };
 
 let _setProgram = function (Memory) {
@@ -115,7 +119,7 @@ let _setIndexCode = function (value, isAlias) {
 // Inputs
 let _getInputs = function () {
     return document.getElementById("inputs").value.split("\n")
-        .map(x => Number(x));
+        .map(x => isNaN(Number(x)) ? 0 : Number(x));
 };
 
 let _setInputs = function (value) {
@@ -125,7 +129,7 @@ let _setInputs = function (value) {
 // Outputs
 let _getOutputs = function () {
     return document.getElementById("outputs").value.split("\n")
-        .map(x => Number(x));
+        .map(x => isNaN(Number(x)) ? 0 : Number(x));
 };
 
 let _setOutputs = function (value) {
