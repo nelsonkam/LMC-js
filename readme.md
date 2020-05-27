@@ -10,6 +10,12 @@ This version is made with plain JS, embeded in an Electron app.
 To use, clone the repo to your local machine, and execute the npm start command
 
 ```
+cd ./LMC-js.git
+
+> Install necessary dependencies
+npm install
+
+> Start the program
 npm start
 ```
 

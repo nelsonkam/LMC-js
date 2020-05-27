@@ -21,14 +21,48 @@ let OnShowIndexCode = function () {
 let OnLoadExample = function (name) {
     _memory = eval(name);
     _setProgram(_memory);
+    _setResult("Program Loaded Successfully.");
 };
 
 let OnLoadExampleIndex = function (name, isAlias) {
     let _memory = eval(name);
     _setIndexCode(_memory, isAlias);
+    _setResult("Program Loaded Successfully.");
+};
 
+// Save / Load Program
+let OnLoadProgram = function () {
+    const { remote } = require("electron");
+    const { dialog } = remote;
+    const { readFile } = require("fs");
 
-    _setResult("Loaded example.");
+    dialog.showOpenDialog().then((fileNames) => {
+        if (fileNames === undefined)
+            return _setResult("No file selected");
+
+        readFile(fileNames.filePaths[0], 'utf-8', (err, data) => {
+            if (err)
+                return _setResult("Error: " + err.message);
+
+            _setProgram(data.split(","));
+            _setResult("Program Loaded Successfully.");
+        });
+    });
+};
+
+let OnSaveProgram = async function () {
+    const { remote } = require("electron");
+    const { dialog } = remote;
+
+    const { writeFile } = require("fs");
+    const { filePath } = await dialog.showSaveDialog({
+        buttonLabel: 'Save Program',
+        defaultPath: `program-${Date.now()}.lmc`
+    });
+
+    writeFile(filePath, _getProgram(), () => {
+        _setResult("Program Saved Successfully.");
+    });
 };
 
 // Fills up Machine-based program with 0's
@@ -147,7 +181,7 @@ let _setOutputs = function (value) {
 
 // Push message to result
 let _setResult = function (value) {
-    document.getElementById("result").innerHTML += `${value}<br>`;
+    document.getElementById("result").innerHTML += `> ${value}<br>`;
 };
 
 let _resetResult = function () {
