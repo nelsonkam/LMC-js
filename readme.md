@@ -1,7 +1,7 @@
 # LMC - Little Man Computer
 This is an implementation of the [LMC](https://en.wikipedia.org/wiki/Little_man_computer) proposed by Dr. Stuart Madnick in 1965.
 
-For further instructions on how to use, refer to the wikipedia article linked above. There is also a `articulo.md` which contains an article written in Spanish about the topic. 
+For further instructions on how to use, refer to the wikipedia article linked above. This is part of an article [published here](https://filosofiadelfuturo.com/lmc/), and is in Spanish.
 
 ### Usage
 
