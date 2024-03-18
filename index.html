@@ -47,6 +47,7 @@
                 <label for="machine_code">Machine code</label>
                 <br>
                 <textarea id="machine_code" rows="100" cols="5"></textarea>
+                <p id="result"></p>
             </div>
             <div class="column hidden" id="index_code_col">
                 <button class="ui button mobile" onclick="OnShowMachineCode()">Show Machine code
@@ -55,6 +56,7 @@
                 <label for="index_code">Assembly code</label>
                 <br>
                 <textarea id="index_code" rows="100" cols="12" maxlength="1200"></textarea>
+                <p id="debug"></p>
             </div>
             <div class="column">
                 <button class="ui button" onclick="OnFillupMemory()">
@@ -74,13 +76,22 @@
                 <button class="ui button" onclick="OnStartup()">
                     Run Program
                 </button>
-                <p id="result"></p>
+
                 <br>
                 <br>
                 <label for="outputs">Output</label>
                 <br>
                 <textarea id="outputs" rows="6" cols="5"></textarea>
                 <br>
+                <br>
+                <p>Assembly Version</p>
+                <form>
+                    <input type="radio" id="index_code_radio" name="assembly" value="index" checked>
+                    <label for="index_code_radio">Index Code</label><br>
+                    <input type="radio" id="alias_code_radio" name="assembly" value="alias">
+                    <label for="alias_code_radio">Alias code</label>
+                </form>
+
                 <br>
                 <button class="ui button" onclick="OnClearMemory()">
                     Clear Memory

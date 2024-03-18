@@ -95,6 +95,9 @@ let OnTranslateMemory = function () {
 
 // Startup program
 let OnStartup = function () {
+  _resetResult();
+  OnTranslateMemory();
+
   if (_getProgram().length > 1) {
     Memory = _getProgram();
     _setResult("Using Machine-based code");
@@ -155,7 +158,7 @@ let _getAliasCode = function () {
     .getDoc()
     .getValue()
     .split("\n")
-    .map((x) => x.split(" ")));
+    .map((x) => x.split(/\s/)));
 };
 
 let _isIndexMode = function () {
@@ -197,6 +200,7 @@ let _setResult = function (value) {
 
 let _resetResult = function () {
   getById("result").innerHTML = "";
+  getById("debug").innerHTML = "";
 };
 
 // Mobile check
