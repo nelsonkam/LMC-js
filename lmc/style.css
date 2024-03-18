@@ -6,14 +6,14 @@ body, span, h1, h2, h3, h4, h5, h6, p, a, blockquote, button, textarea {
     font-size: 14px;
 }
 
-textarea {
+/* textarea {
     background: url(http://i.imgur.com/2cOaJ.png);
     background-attachment: local;
     background-repeat: no-repeat;
     padding-left: 35px;
     padding-top: 10px;
     border-color: #ccc;
-}
+} */
 
 td,
 th {
